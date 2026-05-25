@@ -1,0 +1,37 @@
+ekf_filter_node:
+  ros__parameters:
+    use_sim_time: true # usa del tempo corretto per bag
+    reset_on_time_jump: true # resette il tempo ad ogni avvio
+    frequency: 30.0
+    two_d_mode: true # piano 2D
+    publish_tf: true # per visualizzare il vettore
+
+
+    map_frame: map
+    odom_frame: azrael/odom
+    base_link_frame: azrael/base_link	
+    world_frame: azrael/odom  # odometria come riferimento mondo
+
+    # sensore 1: odometria
+    odom0: /azrael/odom
+    # [X,Y,Z,roll,pitch,yaw,X˙,Y˙,Z˙,roll˙,pitch˙,yaw˙,X¨,Y¨,c]
+    # posizione velocita accellerazione
+    # odometria solo posizione 2d
+    odom0_config: [true,  true,  false,
+                   false, false, false,
+                   false, false, false,
+                   false, false, false,
+                   false, false, false]
+    odom0_differential: false
+
+    # sensore 2: imu
+    imu0: /imu_enu
+    # dell'IMU inizialmene consideravamo lo yaw(imbardata) e lo yaw˙ (la velocita angolare). Ma entrambe hanno bias, quindi escludiamo yaw e utiliziamo solo la velocita angolare con bias risolto
+    imu0_config: [false, false, false,
+                  false, false, false,
+                  false, false, false,
+                  false, false, true, 
+                  false, false, false] 
+    imu0_differential: false
+    # escludiamo gravità
+    imu0_remove_gravitational_acceleration: true
