@@ -1,6 +1,6 @@
 ekf_filter_node:
   ros__parameters:
-    use_sim_time: true # usa del tempo corretto per bag
+    use_sim_time: false # usa del tempo corretto per bag
     reset_on_time_jump: true # resette il tempo ad ogni avvio
     frequency: 30.0
     two_d_mode: true # piano 2D
@@ -18,7 +18,7 @@ ekf_filter_node:
     # posizione velocita accellerazione
     # odometria solo posizione 2d
     odom0_config: [true,  true,  false,
-                   false, false, false,
+                   false, false, true,
                    false, false, false,
                    false, false, false,
                    false, false, false]
@@ -31,7 +31,26 @@ ekf_filter_node:
                   false, false, false,
                   false, false, false,
                   false, false, true, 
-                  false, false, false] 
+                  true, true, false] 
     imu0_differential: false
     # escludiamo gravità
     imu0_remove_gravitational_acceleration: true
+    use_control: true
+    stamped_control: false
+
+    # Which velocities are being controlled. Order is vx, vy, vz, vroll, vpitch, vyaw.
+    control_config: [true, true, false, false, false, true]
+
+    # Places limits on how large the acceleration term will be. Should match your robot's kinematics.
+    acceleration_limits: [4.0, 4.0, 0.0, 0.0, 0.0, 10.0]
+
+    # Acceleration and deceleration limits are not always the same for robots.
+    deceleration_limits: [4.0, 4.0, 0.0, 0.0, 0.0, 10.0]
+
+    # If your robot cannot instantaneously reach its acceleration limit, the permitted change can be controlled with these
+    # gains
+    acceleration_gains: [0.8, 0.8, 0.0, 0.0, 0.0, 0.8]
+
+    # If your robot cannot instantaneously reach its deceleration limit, the permitted change can be controlled with these
+    # gains
+    deceleration_gains: [1.0, 1.0, 0.0, 0.0, 0.0, 1.0]

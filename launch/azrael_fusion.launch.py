@@ -42,7 +42,7 @@ def generate_launch_description():
         output='screen',
         parameters=[{
          'target_frame': LaunchConfiguration('target_frame'),
-         'use_sim_time': True # per forzare time rosbag
+         'use_sim_time': False # per forzare time rosbag
         }],
         remappings=[("imu_in", "/camera/camera/imu"), #"/camera/camera/imu" in azrael, "/sensor/imu/data" in gazebo
                     ("imu_out", "/imu_enu_biased")], # here maybe become /azrael_fusion/imu_enu_biased
@@ -57,7 +57,7 @@ def generate_launch_description():
         output='screen',
         parameters=[
             {
-                'use_sim_time': True # per forzare time rosbag
+                'use_sim_time': False # per forzare time rosbag
             }
         ],
         remappings=[("imu_in", "/imu_enu_biased"), # in: /azrael_fusion/imu_biased
